@@ -216,6 +216,7 @@ def getdata(data, file_suffix):
                 api['requestInfo'] = []
                 api['resultInfo'] = []
                 for api_info in arr:
+                    api_info = api_info.lstrip()
                     if 'group' == api_info[0:5]:
                         pattern = re.compile(r'group="(.*?)"', re.S)
                         items = re.findall(pattern, api_info)
