@@ -31,13 +31,13 @@ def getContent(file_path, file_suffix, exclude_file):
                     file_content = file_content.replace("\r\t", "")
                     #获取全部注释
                     file_content = file_content.replace(' ', '')
-                    if file_suffix == 'php' or file_suffix == 'java':
-                        data.append(re.findall("\/\*.*?\*\/", file_content))
                     if file_suffix == 'py':
                         result = re.findall(r'""".*?"""', file_content)
                         if not result:
                            result = re.findall(r"'''.*?'''", file_content)
                         data.append(result)
+                    else:
+                        data.append(re.findall("\/\*.*?\*\/", file_content))
     fopen.close()
     return data
 
@@ -216,6 +216,7 @@ def getdata(data, file_suffix):
                 api['requestInfo'] = []
                 api['resultInfo'] = []
                 for api_info in arr:
+                    api_info = api_info.lstrip()
                     if 'group' == api_info[0:5]:
                         pattern = re.compile(r'group="(.*?)"', re.S)
                         items = re.findall(pattern, api_info)
